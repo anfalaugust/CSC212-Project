@@ -9,7 +9,7 @@ public PhotoManager() {
 }
 // Return all managed photos
 public LinkedList<Photo> getPhotos(){
-	
+  return photos;
 }
 // Add a photo
 public void addPhoto(Photo p) {
@@ -18,9 +18,5 @@ public void addPhoto(Photo p) {
 // Delete a photo
 public void deletePhoto(String path) {
 	
-}
-
-public LinkedList<Photo> getPhotos(){
-   return photos;
 }
 }
