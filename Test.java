@@ -23,7 +23,7 @@ System.out.println("photo1 path: " + photo1.getPath());
 LinkedList<String> Tags = photo1.getTags();
 //You can write a method that prints the list of tags of photo1.
 System.out.println(photo1.getPath());
-printTags();
+printTags(Tags);
 
 
 System.out.println("Get album2 name, condition, and photos:");
@@ -31,8 +31,10 @@ System.out.println("album2 name: " + album2.getName());
 System.out.println("album2 condition: " + album2.getCondition());
   
 //You can get the list of photos in album2 by calling album2.getPhotos().
-album2.getPhotos();
+LinkedList<String> Photos = album2.getPhotos();
 //You can write a method that prints the list of photos in album2.
+System.out.println(album2.getCondition());
+printPhotos(Photos);
   
 System.out.println("Delete the photo ’bear.jpg’:");
 manager.deletePhoto("bear.jpg");
