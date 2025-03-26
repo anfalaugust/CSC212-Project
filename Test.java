@@ -20,13 +20,18 @@ System.out.println("Get photo1 path and tags:");
 System.out.println("photo1 path: " + photo1.getPath());
   
 //You can get the list of tags of photo1 by calling photo1.getTags().
+LinkedList<String> Tags = photo1.getTags();
 //You can write a method that prints the list of tags of photo1.
-  
+System.out.println(photo1.getPath());
+printTags();
+
+
 System.out.println("Get album2 name, condition, and photos:");
 System.out.println("album2 name: " + album2.getName());
 System.out.println("album2 condition: " + album2.getCondition());
   
 //You can get the list of photos in album2 by calling album2.getPhotos().
+album2.getPhotos();
 //You can write a method that prints the list of photos in album2.
   
 System.out.println("Delete the photo ’bear.jpg’:");
@@ -41,4 +46,32 @@ result.insert(tagsArray[i]);
 }
 return result;
 }
+  
+   public static void printTags(){
+  list.findFirst();
+            if(list.empty()) 
+                return;
+            while(true)
+            {
+                System.out.print(list.retrieve() + " ");
+                if(list.last()) 
+                    return;
+                list.findNext();
+            }
+  
+}
+
+   public static void printPhotos(){
+    list.findFirst();
+            if(list.empty()) 
+                return;
+            while(true)
+            {
+                System.out.println(list.retrieve().getPath());
+                if(list.last()) 
+                    return;
+                list.findNext();
+            }
+        }
+  
 }
