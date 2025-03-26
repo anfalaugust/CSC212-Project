@@ -1,29 +1,36 @@
 public class Album {
-// Constructor
-public Album(String name, String condition, PhotoManager manager) {
-	
-}
-// Return the name of the album
-public String getName() {
-	
-}
-// Return the condition associated with the album
-public String getCondition() {
-	
-}
-// Return the manager
-public PhotoManager getManager() {
-	
-}
-// Return all photos that satisfy the album condition
-public LinkedList<Photo> getPhotos(){
-	
-}
-// Return the number of tag comparisons used to find all photos of the album
-public int getNbComps() {
-	
-}
-	
+        private String name;
+        private String condition;
+        private PhotoManager manager;
+        private int NbComps;
+
+        // Constructor
+        public Album(String name, String condition, PhotoManager manager)
+        {
+            this.name = name;
+            this.condition = condition;
+            this.manager = manager;
+            NbComps =0 ;
+        }
+
+        // Return the name of the album
+        public String getName()
+        {
+            return name;
+        }
+        
+        // Return the condition associated with the album
+        public String getCondition()
+        {
+            return condition;
+        }
+
+        // Return the manager
+        public PhotoManager getManager()
+        {
+            return manager;
+        }
+        
         // Return all photos that satisfy the album condition
         public LinkedList<Photo> getPhotos()
         {
@@ -111,5 +118,4 @@ public int getNbComps() {
             return continue1;
         }
        
-}
 }
