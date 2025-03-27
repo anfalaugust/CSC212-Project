@@ -1,19 +1,21 @@
+
 package DSproject;
 
 
 
 public class Photo {
 private String Path;
-LinkedList<String> Tags = new LinkedList<>(String); 
+LinkedList<String> Tags = new LinkedList<>(); 
 	
 // Constructor	
 public Photo(String path, LinkedList<String> tags) {
 Path = path;
+
 if(!tags.empty()){
-tags.findFirst();
+tags.findfirst();
 while(!tags.last()){
 Tags.insert(tags.retrieve()); //except the last node
-tags.findNext();
+tags.findnext();
 } //while
 Tags.insert(tags.retrieve()); // for the last node
 } //if
@@ -21,18 +23,18 @@ Tags.insert(tags.retrieve()); // for the last node
 	
 // Return the full file name (the path) of the photo. A photo is uniquely identified by its path.
 public String getPath() {
-return path;
+return Path;
 }
 	
 // Return all tags associated with the photo
 public LinkedList<String> getTags(){
 LinkedList<String> associatedTags = new LinkedList<String>();
 	
-if(Tags.empty()){
-Tags.findFirst();
+if(!Tags.empty()){
+Tags.findfirst();
 while(!Tags.last()){
 associatedTags.insert(Tags.retrieve()); //except the last node
-Tags.findNext();
+Tags.findnext();
 } //while
 associatedTags.insert(Tags.retrieve()); // for the last node
 } //if
