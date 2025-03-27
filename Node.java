@@ -1,6 +1,6 @@
 package DSproject;
 
-public class Node {
+public class<T> Node {
 public T data;
 public Node<T> next;
   
