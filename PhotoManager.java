@@ -2,56 +2,60 @@ package DSproject;
 
 
 public class PhotoManager {
-   LinkedList<Photo> photos; 
+   LinkedList<Photo> Photos; 
 // Constructor
 public PhotoManager() {
-   photos = new LinkedList<Photo>; 
+   Photos = new LinkedList<Photo>(); 
 }
 // Return all managed photos
 public LinkedList<Photo> getPhotos(){
-  return photos;
+  return Photos;
 }
 // Add a photo
-public void addPhoto(Photo p) {
-            if (!photos.empty()) {
-	            boolean exists = false;
-	            photos.findFirst();
-	            while (!exists && !photos.last()) {
-	                if (photos.retrieve().getPath().compareToIgnoreCase(p.getPath()) == 0) {
-	                    exists = true;
-	                }
-	                photos.findNext();
-	            }
-	            if (!exists && photos.retrieve().getPath().compareToIgnoreCase(p.getPath()) == 0) {
-	                exists = true;
-	            }
-	            if (!exists) {
-	                photos.insert(p);
-	            }
-	        } else {
-	           System.out.print("photo can't be added");
-	        }
-	
+public void addPhoto(Photo p){
+if (Photos.empty()) {
+Photos.insert(p);
+return;
 }
+
+Photos.findfirst();
+ while (!Photos.last())
+ {
+    if (Photos.retrieve().getPath().equals(p.getPath()))
+        return;
+
+    Photos.findnext();
+ }
+
+ if (Photos.retrieve().getPath().equals(p.getPath()))
+	 return;
+ 
+ Photos.insert(p);
+ 
+
+	 
+ 
+}
+
 // Delete a photo
 public void deletePhoto(String path) {
-              if (!photos.empty()) {
+              if (!Photos.empty()) {
 	            boolean found = false;
-	            photos.findFirst();
-	            while (!found && !photos.last()) {
-	                if (photos.retrieve().getPath().compareToIgnoreCase(path) == 0) {
+	            Photos.findfirst();
+	            while (!found && !Photos.last()) {
+	                if (Photos.retrieve().getPath().equals(path)) {
 	                    found = true;
-	                    photos.remove();
+	                    Photos.remove();
 	                } else {
-	                    photos.findNext();
+	                    Photos.findnext();
 	                }
 	            }
-	            if (!found && photos.retrieve().getPath().compareToIgnoreCase(path) == 0) {
-	                photos.remove();
+	            if (!found && Photos.retrieve().getPath().equals(path)) {
+	                Photos.remove();
 	            }
 	        }
 	        else {
-		           System.out.print("photo can't be deleted");
+		           System.out.println("photo can't be deleted");
 		        }
 	        	
 	
