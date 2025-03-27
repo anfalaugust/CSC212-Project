@@ -22,22 +22,22 @@ System.out.println("photo1 path: " + photo1.getPath());
 //You can get the list of tags of photo1 by calling photo1.getTags().
 LinkedList<String> Tags = photo1.getTags();
 //You can write a method that prints the list of tags of photo1.
-System.out.println(photo1.getPath());
 printTags(Tags);
 
 
 System.out.println("Get album2 name, condition, and photos:");
 System.out.println("album2 name: " + album2.getName());
 System.out.println("album2 condition: " + album2.getCondition());
-  
+  // error
+
 //You can get the list of photos in album2 by calling album2.getPhotos().
-LinkedList<String> Photos = album2.getPhotos();
+LinkedList<Photo> Photos = album2.getPhotos();
 //You can write a method that prints the list of photos in album2.
-System.out.println(album2.getCondition());
 printPhotos(Photos);
   
 System.out.println("Delete the photo ’bear.jpg’:");
 manager.deletePhoto("bear.jpg");
+
 }
 
 private static LinkedList<String> toTagsLinkedList(String tags) {
@@ -49,31 +49,32 @@ result.insert(tagsArray[i]);
 return result;
 }
   
-   public static void printTags(){
-  list.findFirst();
-            if(list.empty()) 
+   public static void printTags(LinkedList<String> TagsList){
+	   TagsList.findfirst();
+            if(TagsList.empty()) 
                 return;
-            while(true)
+            
+            while(!TagsList.last())
             {
-                System.out.print(list.retrieve() + " ");
-                if(list.last()) 
-                    return;
-                list.findNext();
+                System.out.print(TagsList.retrieve() + " ");
+                TagsList.findnext();
             }
-  
+            System.out.print(TagsList.retrieve() + " ");
+            System.out.println(" ");
+           
 }
 
-   public static void printPhotos(){
-    list.findFirst();
-            if(list.empty()) 
+   public static void printPhotos(LinkedList<Photo> photosList){
+	   photosList.findfirst();
+            if(photosList.empty()) 
                 return;
-            while(true)
+            
+            while(!photosList.last())
             {
-                System.out.println(list.retrieve().getPath());
-                if(list.last()) 
-                    return;
-                list.findNext();
+                System.out.println(photosList.retrieve().getPath());
+                photosList.findnext();
             }
+            System.out.println(photosList.retrieve().getPath());
         }
   
 }
