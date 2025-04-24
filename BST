@@ -106,7 +106,7 @@ private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
 	if (parent == null) {
 	root = child;
 	} else {
-	if (n.key - parent.key < 0) {
+	if (n.key.compareToIgnoreCase(parent.key) < 0){
 	parent.left = child;
 	} else {
 	parent.right = child;
