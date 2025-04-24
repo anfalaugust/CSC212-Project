@@ -1,218 +1,120 @@
 package DSproject;
 
 public class BST <T> {
-BST<T> root, current;
-String AllKeys;
-
+BSTNode<T> root, current;
 /** Creates a new instance of BST */
 public BST() {
-        root = current = null;
+root = current = null;
 }
-
 public boolean empty() {
-        return root == null;
+return root == null;
 }
-
 public boolean full() {
-        return false;
+return false;
 }
-
 public T retrieve () {
-        return current.data;
+return current.data;
 }
 
-public boolean findkey(String  tkey) {
-        BST<T> p = root;
-        BST<T> q = root;
-
-        if(empty())
-                return false;
-
-        while(p != null) {
-                q = p;
-                if(p.key.compareToIgnoreCase(tkey) == 0) {
-                        current = p;
-                        return true;
-                }
-                else if(tkey.compareToIgnoreCase(p.key) < 0 )
-                        p = p.left;
-                else
-                        p = p.right;
-        }
-        current = q;
-        return false;
+public boolean findkey(String tkey) {
+BSTNode<T> p = root, q = root;
+if(empty())
+return false;
+while(p != null) {
+q = p;
+if(p.key.equals(tkey) ) {
+current = p;
+return true;
+}
+else if(tkey.compareToIgnoreCase(p.key) < 0)
+p = p.left;
+else
+p = p.right;
+}
+current = q;
+return false;
 }
 
 public boolean insert(String k, T val) {
-        BST<T> p;
-        BST<T> q = current;
-
-        if(findkey(k)) {
-                current = q;  // findkey() modified current
-                return false; // key already in the BST
-        }
-
-        p = new BST<T>(k, val);
-        if (empty()) {
-                root = current = p;
-                return true;
-        }
-        else {
-                // current is pointing to parent of the new key
-                if (k.compareToIgnoreCase(current.key) < 0)
-                        current.left = p;
-                else
-                        current.right = p;
-                current = p;
-                return true;
-        }
+BSTNode<T> p, q = current;
+if(findkey(k)) {
+current = q; 
+return false; 
+}
+p = new BSTNode<T>(k, val);
+if (empty()) {
+root = current = p;
+return true;
+}
+else {
+if (k.compareToIgnoreCase(current.key) < 0 )
+current.left = p;
+else
+current.right = p;
+current = p;
+return true;
+}
 }
 
-public boolean remove_key (String tkey){
-        Boolean removed = new Boolean(false);
-        BST<T> p;
-        p = remove_aux(tkey, root, removed);
-        current = root = p;
-        return removed;
-}
-
-private  BST<T> remove_aux(String  key,  BST<T> p, boolean flag) {
-	 BST<T> q, child = null;
-        if(p == null)
-                return null;
-        if(key.compareToIgnoreCase(p.key) <0)
-                p.left = remove_aux(key, p.left, flag); //go left
-        else if(key.compareToIgnoreCase(p.key) > 0)
-                p.right = remove_aux(key, p.right, flag); //go right
-        else {
-                flag = true;
-                if (p.left != null && p.right != null){ //two children
-                        q = find_min(p.right);
-                        p.key = q.key;
-                        p.data = q.data;
-                        p.right = remove_aux(q.key, p.right, flag);
-                }
-        else {
-                        if (p.right == null) //one child
-                                child = p.left;
-                        else if (p.left == null) //one child
-                                child = p.right;
-                        return child;
-                }
-        }
-        return p;
-}
-
-private  BST<T> find_min( BST<T> p)
-{
-        if(p == null)
-                return null;
-
-        while(p.left != null){
-                p = p.left;
-        }
-
-        return p;
-}
-
-public boolean update(String key, T data)
-{
-            remove_key(current.key);
-            return insert(key, data);
-}
-
-//Method removeKey: iterative  
 public boolean removeKey(String k) {
-    // Search 
-    String  k1 = k;      
-    BST<T> p = root;      
-    BST<T> q = null;    // Parent of p
-
-    while (p != null) 
-    {
-        if (k1.compareToIgnoreCase(p.key) < 0) 
-        {
-            q =p;
-            p = p.left;
-        }
-        else if (k1.compareToIgnoreCase(p.key) >0) 
-        {
-            q = p;
-            p = p.right;
-        } 
-        else { 
-            // Found the key            
-            // Check the three cases
-            if ((p.left != null) && (p.right != null)) 
-            { 
-        // Case 3: two children                
-                    // Search for the min in the right subtree
-            	 BST<T> min = p.right;
-                    q = p;
-                    while (min.left != null) 
-                    {
-                        q = min;
-                        min = min.left;
-                    }
-                    p.key = min.key;               
-                    p.data = min.data;
-                    k1 = min.key;
-                    p = min;
-                    // Now fall back to either case 1 or 2
-            }
-            // The subtree rooted at p will change here             
-            if (p.left != null) 
-            { 
-                // One child
-                p = p.left;
-            } 
-            else 
-            { 
-                // One or no children
-                p = p.right;
-            }
-
-            if (q == null) 
-            { 
-                // No parent for p, root must change
-                root = p;
-            } 
-            else 
-            {
-                if (k1.compareToIgnoreCase(q.key) < 0) 
-                {
-                    q.left = p;
-                } 
-                else 
-                {
-                    q.right = p;
-                }
-            }
-            current = root;
-            return true;
-        }
-    }
-    return false; // Not found
+BSTNode<T> p = root;
+BSTNode<T> q = null; 
+boolean found=false;
+String Key = k;
+// Search for k
+while ((p != null)&&(!found)) {
+if (Key.compareToIgnoreCase(p.key) < 0) {
+q = p;
+p = p.left;
+} else if (Key.compareToIgnoreCase(p.key) > 0) {
+q = p;
+p = p.right;
+} else // Found the key
+found=true;
 }
+if(found){
+	// Check the three cases
+	if ((p.left != null) && (p.right != null)) { // Case 3: two
+	// children
+	// Search for the min in the right subtree
+	BSTNode<T> min = p.right;
+	q = p;
+	while (min.left != null) {
+	q = min;
+	min = min.left;
+	}
+	p.key = min.key;
+	p.data = min.data;
+	deleteNode(min,q);
+	}
+	else //case 1 and 2
+	deleteNode(p,q);
+	current = root;
+	return true;
+	}
+	return false; // Not found
+	}
 
-public String inOrder ()
- {
-     AllKeys = "" ;
-      if ( root != null)
-          inorder( root );
-      return AllKeys;
 
- }
 
- private void inorder(BST<T> p )
- {
-     if ( p.left !=null)
-         inorder ( p.left);
-     if (AllKeys == "")
-         AllKeys = p.key;
-     else
-          AllKeys += " AND " + p.key ;
-     if ( p.right !=null)
-         inorder ( p.right);
- }
+private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
+	BSTNode<T> child;
+	if(n.left!=null)
+	child=n.left;
+	else
+	child=n.right;
+	if (parent == null) {
+	root = child;
+	} else {
+	if (n.key - parent.key < 0) {
+	parent.left = child;
+	} else {
+	parent.right = child;
+	}
+	}
+}
+private boolean update(String key, T data) {
+	if(removeKey(current.key));
+	return insert(key, data);
+}
 }
