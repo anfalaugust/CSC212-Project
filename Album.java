@@ -1,3 +1,4 @@
+/*package Dsproject;
 public class Album {
         private String name;
         private String condition;
@@ -39,11 +40,11 @@ public class Album {
                     LinkedList<Photo> photos1 = manager.getPhotos();
                     if (! photos1.empty())
                     {
-                        photos1.findFirst();
+                        photos1.findfirst();
                         while (! photos1.last())
                         {
                             Rphotos.insert(new Photo(photos1.retrieve().getPath(), photos1.retrieve().getTags()));
-                            photos1.findNext();
+                            photos1.findnext();
                         }
                         Rphotos.insert(new Photo(photos1.retrieve().getPath(), photos1.retrieve().getTags()));
                     }
@@ -54,22 +55,22 @@ public class Album {
                 {
                     String [] Array = condition.split(" AND ");
                     
-                    Rphotos.findFirst();
-                    while ( ! Rphotos.last())
+                    Rphotos.findfirst();
+                    while ( !( Rphotos.last()))
                     {
                         Photo photo = Rphotos.retrieve();
                         //System.out.println("test " + photo.getPath());
-                        if ( ! allAvilable (photo.allTags , Array ))
+                        if ( !allAvilable (photo.Tags , Array ))
                             Rphotos.remove();
                         else
-                            Rphotos.findNext();
+                            Rphotos.findnext();
                     }
                     Photo photo11 = Rphotos.retrieve();
                     //System.out.println("testlast " + photo11.getPath());
-                    if ( ! allAvilable (photo11.allTags , Array ))
+                    if ( !allAvilable (photo11.Tags , Array ))
                         Rphotos.remove();
                     else
-                        Rphotos.findNext();
+                        Rphotos.findnext();
                 }
                 return Rphotos;
         }
@@ -80,10 +81,10 @@ public class Album {
             return NbComps;
         }
 
-        private boolean allAvilable ( LinkedList<String> AllTags , String [] Array )
+        private boolean allAvilable ( LinkedList<String> Tags , String [] Array )
         {
             boolean continue1 = true;
-            if (AllTags.empty())
+            if (Tags.empty())
                 continue1 = false;
             else
             {
@@ -91,24 +92,24 @@ public class Album {
                 {
                     boolean found_in_tags = false;
 
-                    AllTags.findFirst();
+                    Tags.findfirst();
 
-                    while (!AllTags.last())
+                    while (!Tags.last())
                     {
                         this.NbComps ++ ;    
                         //System.out.println(AllTags.retrieve() + " " + Array[i]);
-                        if (AllTags.retrieve().compareToIgnoreCase(Array[i]) == 0)
+                        if (Tags.retrieve().compareToIgnoreCase(Array[i]) == 0)
                         {
                             found_in_tags = true;
                             break;
                         }
-                        AllTags.findNext();
+                        Tags.findnext();
                     }
                     if (! found_in_tags )
                     {
                         this.NbComps ++ ;
                         //System.out.println(AllTags.retrieve() + " " + Array[i]);
-                        if (AllTags.retrieve().compareToIgnoreCase(Array[i]) == 0)
+                        if (Tags.retrieve().compareToIgnoreCase(Array[i]) == 0)
                             found_in_tags = true;
                     }
                     if ( ! found_in_tags )
@@ -118,4 +119,101 @@ public class Album {
             return continue1;
         }
        
+}*/
+package Dsproject;
+
+//import java.util.LinkedList;
+
+public class Album {
+    private String name;
+    private String condition;
+    private PhotoManager manager;
+    private int comparisonCount;
+
+    // Constructor
+    public Album(String name, String condition, PhotoManager manager) {
+        this.name = name;
+        this.condition = condition;
+        this.manager = manager;
+        this.comparisonCount = 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public PhotoManager getManager() {
+        return manager;
+    }
+
+    public int getNbComps() {
+        return comparisonCount;
+    }
+
+    public LinkedList<Photo> getPhotos() {
+        LinkedList<Photo> resultPhotos = new LinkedList<>();
+        LinkedList<Photo> allPhotos = manager.getPhotos();
+
+        // Clone the list
+        if (!allPhotos.empty()) {
+            allPhotos.findfirst();
+            while (!allPhotos.last()) {
+                resultPhotos.insert(new Photo(allPhotos.retrieve().getPath(), allPhotos.retrieve().getTags()));
+                allPhotos.findnext();
+            }
+            resultPhotos.insert(new Photo(allPhotos.retrieve().getPath(), allPhotos.retrieve().getTags()));
+        }
+
+        comparisonCount = 0;
+
+        // Filter by condition
+        if (condition.equals("") != false) {
+            String[] requiredTags = condition.split(" AND ");
+            resultPhotos.findfirst();
+            while (!resultPhotos.last()) {
+                if (!containsAllTags(resultPhotos.retrieve().getTags(), requiredTags)) {
+                    resultPhotos.remove();
+                } else {
+                    resultPhotos.findnext();
+                }
+            }
+
+            // Check last item
+            if (!containsAllTags(resultPhotos.retrieve().getTags(), requiredTags)) {
+                resultPhotos.remove();
+            }
+        }
+
+        return resultPhotos;
+    }
+
+    private boolean containsAllTags(LinkedList<String> tags, String[] required) {
+        
+        
+        for (String tag : required) {
+            boolean found = false;
+            tags.findfirst();
+            while (!tags.last()) {
+                comparisonCount++;
+                if (tags.retrieve().equalsIgnoreCase(tag)) {
+                    found = true;
+                    break;
+                }
+                tags.findnext();
+            }
+
+            if (!found) {
+                comparisonCount++;
+                if (!tags.retrieve().equalsIgnoreCase(tag)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
