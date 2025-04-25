@@ -2,7 +2,7 @@ package DSproject;
 
 public class BST <T> {
 BSTNode<T> root, current;
-String TheKeys;
+String Keys;
 /** Creates a new instance of BST */
 public BST() {
 root = current = null;
@@ -116,32 +116,33 @@ private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
 }
 
 boolean update(String key, T val) {
-	    if (findkey(key)) {
-	        current.data = val;
-	        return true;
-	    }
-	    return false;
-	}
+    if (findkey(key)) {
+        current.data = val;
+        return true;
+    }
+    return false;
+}
+
+
 
 public String inOrder ()
 {
-    TheKeys = "" ;
+    Keys = "" ;
      if ( root != null)
-         inOrder( root );
-     return TheKeys;
+         inorder( root );
+     return Keys;
 
 }
 
-public void inOrder(BSTNode<T> t) {
-    if (t == null) {
-        return;
-    }
-
-
-    inOrder(t.left);
-
-    System.out.println(t.data);
-
-    inOrder(t.right);
+private void inorder(BSTNode<T> p )
+{
+    if ( p.left !=null)
+        inorder ( p.left);
+    if (Keys == "")
+        Keys = p.key;
+    else
+         Keys += " AND " + p.key ;
+    if ( p.right !=null)
+        inorder ( p.right);
 }
 }
