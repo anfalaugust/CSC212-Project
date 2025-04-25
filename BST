@@ -115,9 +115,13 @@ private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
 	}
 }
 
-public void update(T val) {
-current.data = val;
-}
+boolean update(String key, T val) {
+	    if (findkey(key)) {
+	        current.data = val;
+	        return true;
+	    }
+	    return false;
+	}
 
 public String inOrder ()
 {
