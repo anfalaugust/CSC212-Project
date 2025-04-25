@@ -1,10 +1,12 @@
+package DSproject;
+
 public class InvIndexPhotoManager {
-        BST<LinkedList<Photo>> Inverted_Index;
+        BST<LinkedList<Photo>> InvIndex;
         
         // Constructor
         public InvIndexPhotoManager()
         {
-            Inverted_Index = new BST<LinkedList<Photo>>();
+        	InvIndex = new BST<LinkedList<Photo>>();
         }
         
         // Add a photo
@@ -39,7 +41,7 @@ public class InvIndexPhotoManager {
         // Delete a photo
         public void deletePhoto(String path)
         {
-            String AllTags = Inverted_Index.inOrder();
+            String AllTags = InvIndex.inOrder();
             if (AllTags.length() == 0)
                AllTags += " ";
             else
@@ -49,9 +51,9 @@ public class InvIndexPhotoManager {
             
             for ( int i = 0; i < tags.length ; i++)
             {
-                Inverted_Index.findkey(tags[i]);
-               LinkedList<Photo> photos_inverted = Inverted_Index.retrieve();
-               photos_inverted.findFirst();
+            	InvIndex.findkey(tags[i]);
+               LinkedList<Photo> photos_inverted = InvIndex.retrieve();
+               photos_inverted.findfirst();
                while ( ! photos_inverted.last())
                {
                    if ( photos_inverted.retrieve().getPath().compareToIgnoreCase(path) == 0)
@@ -60,22 +62,22 @@ public class InvIndexPhotoManager {
                        break;
                    }
                    else
-                      photos_inverted.findNext();
+                      photos_inverted.findnext();
                    
                }   
                if (photos_inverted.retrieve().getPath().compareToIgnoreCase(path) == 0)
                     photos_inverted.remove();
                
-               if ( photos_inverted.getSize() == 0)
-                   Inverted_Index.removeKey(tags[i]);
+               if ( photos_inverted.getCount() == 0)
+            	   InvIndex.removeKey(tags[i]);
                else
-                   Inverted_Index.update(tags[i], photos_inverted);
+            	   InvIndex.update(tags[i], photos_inverted);
             }
         }
         
         // Return the inverted index of all managed photos
         public BST<LinkedList<Photo>> getPhotos()
         {
-            return Inverted_Index;
+            return InvIndex;
         }
  }
