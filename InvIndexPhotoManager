@@ -8,57 +8,34 @@ public class InvIndexPhotoManager {
         }
         
         // Add a photo
-        public void addPhoto(Photo p)
-        {
-            if ( Inverted_Index.findkey(" ") == true )
-            {
-                LinkedList<Photo> photos_inverted = Inverted_Index.retrieve();
-                photos_inverted.insert(p);
-                Inverted_Index.update(" ", photos_inverted);
-            }
-            else
-            {
-                LinkedList<Photo> photos_inverted = new LinkedList<Photo>();
-                photos_inverted.insert(p);
-                Inverted_Index.insert(" ", photos_inverted);
-            }
-            
-            LinkedList<String> tags = p.getTags();
-            
-            if (! tags.empty())
-            {
-                tags.findFirst();
-                while (!tags.last())
-                {
-                    if ( Inverted_Index.findkey(tags.retrieve()) == true )
-                    {
-                        LinkedList<Photo> photos_inverted = Inverted_Index.retrieve();
-                        photos_inverted.insert(p);
-                        Inverted_Index.update(tags.retrieve(), photos_inverted);
-                    }
-                    else
-                    {
-                        LinkedList<Photo> photos_inverted = new LinkedList<Photo>();
-                        photos_inverted.insert(p);
-                        Inverted_Index.insert(tags.retrieve(), photos_inverted);
-                    }
-                    tags.findNext();
-                }
-                if ( Inverted_Index.findkey(tags.retrieve()) == true )
-                {
-                    LinkedList<Photo> photos_inverted = Inverted_Index.retrieve();
-                    photos_inverted.insert(p);
-                    Inverted_Index.update(tags.retrieve(), photos_inverted);
-                }
-                else
-                {
-                    LinkedList<Photo> photos_inverted = new LinkedList<Photo>();
-                    photos_inverted.insert(p);
-                    Inverted_Index.insert(tags.retrieve(), photos_inverted);
-                }
-            }
-        }
-        
+      public void addPhoto(Photo p) {
+	    LinkedList<String> tags = p.getTags();
+	    if (tags.empty()) 
+	    	return;
+
+	    tags.findfirst();
+	    while (true) {
+	        String tag = tags.retrieve();
+	        
+	        if (InvIndex.findkey(tag)) {
+	            LinkedList<Photo> photoList = InvIndex.retrieve();
+	            photoList.insert(p);
+	            InvIndex.update(tag, photoList);
+	        } 
+	        
+	        else {
+	            LinkedList<Photo> newList = new LinkedList<>();
+	            newList.insert(p);
+	            InvIndex.insert(tag, newList);
+	        }
+
+	        if (tags.last()) 
+	        	break;
+	        
+	        tags.findnext();
+	    }
+	}
+
         // Delete a photo
         public void deletePhoto(String path)
         {
