@@ -1,0 +1,198 @@
+package DSproject;
+
+public class InvertedAlbum {
+	 private String name;
+     private String condition;
+     private InvIndexPhotoManager InvertedManager;
+     private int NbComps;
+
+     // Constructor
+     public InvertedAlbum(String name, String condition, InvIndexPhotoManager manager)
+     {
+         this.name = name;
+         this.condition = condition;
+         this.InvertedManager = manager;
+         NbComps =0 ;
+     }
+     
+     // Return the name of the album
+     public String getName()
+     {
+         return name;
+     }
+     
+     // Return the condition associated with the album
+     public String getCondition()
+     {
+         return condition;
+     }
+
+     // Return the manager
+     public InvIndexPhotoManager getManager()
+     {
+         return InvertedManager;
+     }
+     
+     // Return all photos that satisfy the album condition
+     public LinkedList<Photo> getPhotos()
+     {
+         BST<LinkedList<Photo>> photosBST = InvertedManager.getPhotos();
+         LinkedList<Photo> Rphotos = new LinkedList<Photo>();
+         NbComps =0 ;
+         String [] tags;
+         
+         if (this.condition.compareTo("") != 0)
+             tags = condition.split(" AND ");
+         else
+             tags = photosBST.inOrder().split(" AND ");
+
+         for ( int i = 0 ; i < tags.length ; i++)
+         {
+             
+             if ( photosBST.findkey(tags[i]) == true)
+             {
+                 if (i == 0)
+                 {
+                     LinkedList<Photo > miniTag = photosBST.retrieve();
+                     miniTag.findfirst();
+                     while ( ! miniTag.last())
+                     {
+                         Rphotos.insert(miniTag.retrieve());
+                         miniTag.findnext();
+                     }
+                     Rphotos.insert(miniTag.retrieve());
+                 }
+                 else
+                 {
+                     if (condition.compareToIgnoreCase("") != 0 )
+                          Rphotos  = ListsIntersection ( Rphotos , photosBST.retrieve());
+                     else
+                         Rphotos  = ListsUnion(Rphotos , photosBST.retrieve());    
+                 }
+             }
+             else
+             {
+                 Rphotos = new LinkedList<Photo>();
+                 break;
+             }
+         }
+         return Rphotos;
+     }
+    
+     // Return the number of tag comparisons used to find all photos of the album
+     public int getNbComps()
+     {
+         return NbComps;
+     }
+
+     private LinkedList<Photo> ListsIntersection ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
+     {
+    	 LinkedList<Photo> result = new LinkedList<Photo>();
+         
+         if (! list2.empty())
+         {
+             list2.findfirst();
+             while (! list2.last())
+             {
+                 if (! list1.empty())
+                 {
+                     boolean found = false;
+                     list1.findfirst();
+                     while (! list1.last() && ! found)
+                     {
+                         if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                         {
+                             NbComps++;
+                             found = true;
+                         }
+                         list1.findnext();
+                     }
+                     if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                     {
+                         NbComps++;
+                         found = true;
+                     }
+                     if (found )
+                         result.insert(list2.retrieve());
+                         
+                 }
+                 list2.findnext();
+             }
+             
+             boolean found = false;
+             list1.findfirst();
+             while (! list1.last() && ! found)
+             {
+                 if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                 {
+                     NbComps++;
+                     found = true;
+                 }
+                 list1.findnext();
+             }
+             if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+             {
+                 NbComps++;
+                 found = true;
+             }
+             if (found )
+                 result.insert(list2.retrieve());
+                               
+         }
+         return result;
+     }
+     private LinkedList<Photo> ListsUnion ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
+     {
+    	 if (! list2.empty())
+         {
+             list2.findfirst();
+             while (! list2.last())
+             {
+                 if (! list1.empty())
+                 {
+                     boolean found = false;
+                     list1.findfirst();
+                     while (! list1.last() && ! found)
+                     {
+                         if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                         {
+                             NbComps++;
+                             found = true;
+                         }
+                         list1.findnext();
+                     }
+                     if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                     {
+                         NbComps++;
+                         found = true;
+                     }
+                     if (!found )
+                         list1.insert(list2.retrieve());
+                         
+                 }
+                 list2.findnext();
+             }
+             
+             boolean found = false;
+             list1.findfirst();
+             while (! list1.last() && ! found)
+             {
+                 if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+                 {
+                     NbComps++;
+                     found = true;
+                 }
+                 list1.findnext();
+             }
+             if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+             {
+                 NbComps++;
+                 found = true;
+             }
+             if (!found )
+                 list1.insert(list2.retrieve());
+                               
+         }
+         return list1;
+     }
+}
