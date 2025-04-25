@@ -2,25 +2,19 @@ package DSproject;
 
 public class BST <T> {
 BSTNode<T> root, current;
-
+String TheKeys;
+/** Creates a new instance of BST */
 public BST() {
 root = current = null;
 }
-
 public boolean empty() {
 return root == null;
 }
-
 public boolean full() {
 return false;
 }
-
 public T retrieve () {
 return current.data;
-}
-
-public void update(T val) {
-current.data = val;
 }
 
 public boolean findkey(String tkey) {
@@ -121,6 +115,20 @@ private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
 	}
 }
 
+public void update(T val) {
+current.data = val;
+}
+
+public void inOrder(BSTNode<T> t) {
+    if (t == null) {
+        return;
+    }
 
 
+    inOrder(t.left);
+
+    System.out.println(t.data);
+
+    inOrder(t.right);
+}
 }
