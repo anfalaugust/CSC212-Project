@@ -1,9 +1,12 @@
+
 package DSproject;
 
-public class LinkedList {
+public class LinkedList<T> {
 private Node<T> head;
 private Node<T> current;
 int count;
+
+
   
 public LinkedList () {
 head = current = null; }
@@ -62,5 +65,7 @@ count--;
   
 public int getCount() {
 return count; }
+
+
 
 }
