@@ -39,23 +39,18 @@ Photos.findfirst();
 
 // Delete a photo
 public void deletePhoto(String path) {
-if (!Photos.empty()) {
-  Photos.findfirst();
-    while (!Photos.last()) {
-       if (Photos.retrieve().getPath().equals(path)) 
-          Photos.remove();
-          return;
-} 
-Photos.findnext();
+    if (!Photos.empty()) {
+        Photos.findfirst();
+        while (!Photos.last()) {
+            if (Photos.retrieve().getPath().equalsIgnoreCase(path)) {
+                Photos.remove();  
+                return; 
+            }
+            Photos.findnext();  
+        }
+        if (Photos.retrieve().getPath().equalsIgnoreCase(path)) {
+            Photos.remove();  }
+    }
 }
-	            
-if (Photos.retrieve().getPath().equals(path))
-	 return; 
 
-Photos.remove();
-	      
-	        
-	        	
-	
-}
 }
