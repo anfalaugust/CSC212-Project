@@ -6,7 +6,6 @@ public class InvertedAlbum {
      private InvIndexPhotoManager InvertedManager;
      private int NbComps;
 
-     // Constructor
      public InvertedAlbum(String name, String condition, InvIndexPhotoManager manager)
      {
          this.name = name;
@@ -15,25 +14,21 @@ public class InvertedAlbum {
          NbComps =0 ;
      }
      
-     // Return the name of the album
      public String getName()
      {
          return name;
      }
      
-     // Return the condition associated with the album
      public String getCondition()
      {
          return condition;
      }
 
-     // Return the manager
      public InvIndexPhotoManager getManager()
      {
          return InvertedManager;
      }
      
-     // Return all photos that satisfy the album condition
 public LinkedList<Photo> getPhotos()
      {
          BST<LinkedList<Photo>> photosBST = InvertedManager.getPhotos();
