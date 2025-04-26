@@ -1,5 +1,5 @@
 
-package Dsproject;
+package DSproject;
 
 public class Album {
     private String name;
@@ -35,7 +35,6 @@ public class Album {
         LinkedList<Photo> resultPhotos = new LinkedList<>();
         LinkedList<Photo> allPhotos = manager.getPhotos();
 
-        // Clone the list
         if (!allPhotos.empty()) {
             allPhotos.findfirst();
             while (!allPhotos.last()) {
@@ -48,7 +47,7 @@ public class Album {
         comparisonCount = 0;
 
         // Filter by condition
-        if (condition.equals("") != false) {
+        if (!condition.isEmpty()) { // Fix: check if the condition is not empty
             String[] requiredTags = condition.split(" AND ");
             resultPhotos.findfirst();
             while (!resultPhotos.last()) {
@@ -67,6 +66,7 @@ public class Album {
 
         return resultPhotos;
     }
+
 
     private boolean containsAllTags(LinkedList<String> tags, String[] required) {
         
