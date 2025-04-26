@@ -115,7 +115,7 @@ private void deleteNode(BSTNode<T> n,BSTNode<T> parent) {
 	}
 }
 
-boolean update(String key, T val) {
+public boolean update(String key, T val) {
     if (findkey(key)) {
         current.data = val;
         return true;
@@ -127,22 +127,22 @@ boolean update(String key, T val) {
 
 public String inOrder ()
 {
-    Keys = "" ;
-     if ( root != null)
-         inorder( root );
+Keys = "" ;
+ if (root != null)
+  inorder(root);
      return Keys;
-
 }
 
 private void inorder(BSTNode<T> p )
 {
-    if ( p.left !=null)
-        inorder ( p.left);
-    if (Keys == "")
-        Keys = p.key;
-    else
-         Keys += " AND " + p.key ;
-    if ( p.right !=null)
-        inorder ( p.right);
+ if (p.left != null) 
+  inorder(p.left);
+	
+	Keys = (Keys.isEmpty()) ? p.key : Keys + " AND " + p.key;
+
+	if (p.right != null) 
+	    inorder(p.right);
+	
+
 }
 }
