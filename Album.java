@@ -7,7 +7,7 @@ public class Album {
     private PhotoManager manager;
     private int comparisonCount;
 
-    // Constructor
+
     public Album(String name, String condition, PhotoManager manager) {
         this.name = name;
         this.condition = condition;
@@ -46,8 +46,7 @@ public class Album {
 
         comparisonCount = 0;
 
-        // Filter by condition
-        if (!condition.isEmpty()) { // Fix: check if the condition is not empty
+        if (!condition.isEmpty()) { 
             String[] requiredTags = condition.split(" AND ");
             resultPhotos.findfirst();
             while (!resultPhotos.last()) {
@@ -58,7 +57,7 @@ public class Album {
                 }
             }
 
-            // Check last item
+            
             if (!containsAllTags(resultPhotos.retrieve().getTags(), requiredTags)) {
                 resultPhotos.remove();
             }
