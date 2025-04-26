@@ -34,157 +34,154 @@ public class InvertedAlbum {
      }
      
      // Return all photos that satisfy the album condition
-     public LinkedList<Photo> getPhotos()
+public LinkedList<Photo> getPhotos()
      {
          BST<LinkedList<Photo>> photosBST = InvertedManager.getPhotos();
-         LinkedList<Photo> Rphotos = new LinkedList<Photo>();
+         LinkedList<Photo> resultPhotos = new LinkedList<Photo>();
          NbComps =0 ;
-         String [] tags;
+         String [] Tags;
          
          if (this.condition.compareTo("") != 0)
-             tags = condition.split(" AND ");
+        	 Tags = condition.split(" AND ");
          else
-             tags = photosBST.inOrder().split(" AND ");
+        	 Tags = photosBST.inOrder().split(" AND ");
 
-         for ( int i = 0 ; i < tags.length ; i++)
+         for ( int i = 0 ; i < Tags.length ; i++)
          {
              
-             if ( photosBST.findkey(tags[i]) == true)
+             if ( photosBST.findkey(Tags[i]) == true)
              {
                  if (i == 0)
                  {
-                     LinkedList<Photo > miniTag = photosBST.retrieve();
-                     miniTag.findfirst();
-                     while ( ! miniTag.last())
+                     LinkedList<Photo > shortTags = photosBST.retrieve();
+                     shortTags.findfirst();
+                     while ( ! shortTags.last())
                      {
-                         Rphotos.insert(miniTag.retrieve());
-                         miniTag.findnext();
+                    	 resultPhotos.insert(shortTags.retrieve());
+                    	 shortTags.findnext();
                      }
-                     Rphotos.insert(miniTag.retrieve());
+                     resultPhotos.insert(shortTags.retrieve());
                  }
                  else
                  {
-                     if (condition.compareToIgnoreCase("") != 0 )
-                          Rphotos  = ListsIntersection ( Rphotos , photosBST.retrieve());
+                     if (condition.compareToIgnoreCase("") == 0 )
+                    	 resultPhotos  = ListsUnion(resultPhotos , photosBST.retrieve()); 
                      else
-                         Rphotos  = ListsUnion(Rphotos , photosBST.retrieve());    
+                    	 resultPhotos  = ListsIntersection(resultPhotos , photosBST.retrieve()); 
+                    	    
                  }
              }
              else
              {
-                 Rphotos = new LinkedList<Photo>();
+            	 resultPhotos = new LinkedList<Photo>();
                  break;
              }
          }
-         return Rphotos;
+         return resultPhotos;
      }
     
-     // Return the number of tag comparisons used to find all photos of the album
      public int getNbComps()
      {
          return NbComps;
      }
 
-     private LinkedList<Photo> ListsIntersection ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
+private LinkedList<Photo> ListsIntersection ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
      {
-    	 LinkedList<Photo> result = new LinkedList<Photo>();
+    	 LinkedList<Photo> resultList = new LinkedList<Photo>();
          
-         if (! list2.empty())
-         {
-             list2.findfirst();
-             while (! list2.last())
-             {
-                 if (! list1.empty())
-                 {
-                     boolean found = false;
-                     list1.findfirst();
-                     while (! list1.last() && ! found)
-                     {
-                         if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
-                         {
-                             NbComps++;
-                             found = true;
-                         }
-                         list1.findnext();
-                     }
-                     if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
-                     {
-                         NbComps++;
-                         found = true;
-                     }
-                     if (found )
-                         result.insert(list2.retrieve());
-                         
-                 }
-                 list2.findnext();
-             }
-             
-             boolean found = false;
-             list1.findfirst();
-             while (! list1.last() && ! found)
-             {
-                 if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
-                 {
-                     NbComps++;
-                     found = true;
-                 }
-                 list1.findnext();
-             }
-             if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
-             {
-                 NbComps++;
-                 found = true;
-             }
-             if (found )
-                 result.insert(list2.retrieve());
-                               
-         }
-         return result;
+if (!list2.empty()) {
+    list2.findfirst();
+      while (!list2.last()) {
+    	if (!list1.empty()) {
+    	boolean found = false;
+    	list1.findfirst();
+
+    	 while (!list1.last() && !found) {
+    		 if (list2.retrieve().getPath().equals(list1.retrieve().getPath())) {
+    		   NbComps++;  
+    		   found = true;
+    		 }
+    		   list1.findnext();
+    		            }
+
+    	if (!found && list2.retrieve().getPath().equals(list1.retrieve().getPath())) {
+    	   NbComps++;
+    		found = true;
+    		            }
+
+    	if (found) {
+    		resultList.insert(list2.retrieve());
+    		            }
+    		        }
+    		 list2.findnext();
+    		    }
+
+    	 boolean found = false;
+          list1.findfirst();
+    		while (!list1.last() && !found) {
+    		   if (list2.retrieve().getPath().equals(list1.retrieve().getPath())) {
+    		      NbComps++;
+    		      found = true;
+    		        }
+    		      list1.findnext();
+    		    }
+
+    		    if (!found && list2.retrieve().getPath().equals(list1.retrieve().getPath())) {
+    		        NbComps++;
+    		        found = true;
+    		    }
+
+    		    if (found) {
+    		        resultList.insert(list2.retrieve());
+    		    }
+    		}
+
+    		return resultList;
      }
-     private LinkedList<Photo> ListsUnion ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
+private LinkedList<Photo> ListsUnion ( LinkedList<Photo> list1 ,LinkedList<Photo> list2)
      {
-    	 if (! list2.empty())
+    if (! list2.empty())
          {
-             list2.findfirst();
-             while (! list2.last())
+      list2.findfirst();
+       while (! list2.last())
              {
-                 if (! list1.empty())
+        if (! list1.empty())
                  {
-                     boolean found = false;
-                     list1.findfirst();
-                     while (! list1.last() && ! found)
+           boolean found = false;
+           list1.findfirst();
+             while (! list1.last() && ! found)
                      {
-                         if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+         if (list2.retrieve().getPath().equals(list1.retrieve().getPath()))
                          {
-                             NbComps++;
-                             found = true;
+             NbComps++;
+             found = true;
                          }
-                         list1.findnext();
+             list1.findnext();
                      }
-                     if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+         if (! found && list2.retrieve().getPath().equals(list1.retrieve().getPath()))
                      {
-                         NbComps++;
-                         found = true;
+           NbComps++;
+            found = true;
                      }
-                     if (!found )
-                         list1.insert(list2.retrieve());
+          if (!found )
+          list1.insert(list2.retrieve());
                          
                  }
-                 list2.findnext();
+          list2.findnext();
              }
              
-             boolean found = false;
-             list1.findfirst();
-             while (! list1.last() && ! found)
+   boolean found = false;
+   list1.findfirst();
+      while (! list1.last() && ! found)
              {
-                 if (list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+          if (list2.retrieve().getPath().equals(list1.retrieve().getPath()))
                  {
-                     NbComps++;
-                     found = true;
+            NbComps++;
+            found = true;
                  }
-                 list1.findnext();
+            list1.findnext();
              }
-             if (! found && list2.retrieve().getPath().compareToIgnoreCase(list1.retrieve().getPath()) == 0)
+           if (! found && list2.retrieve().getPath().equals(list1.retrieve().getPath()))
              {
                  NbComps++;
                  found = true;
