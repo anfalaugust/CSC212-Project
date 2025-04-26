@@ -3,7 +3,7 @@ package DSproject;
 public class BST <T> {
 BSTNode<T> root, current;
 String Keys;
-/** Creates a new instance of BST */
+
 public BST() {
 root = current = null;
 }
@@ -74,10 +74,8 @@ p = p.right;
 found=true;
 }
 if(found){
-	// Check the three cases
+	
 	if ((p.left != null) && (p.right != null)) { // Case 3: two
-	// children
-	// Search for the min in the right subtree
 	BSTNode<T> min = p.right;
 	q = p;
 	while (min.left != null) {
