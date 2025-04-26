@@ -1,6 +1,6 @@
 package DSproject;
 
-public class Test {
+public class TestPhotoManager {
 public static void main(String[] args) {
 PhotoManager manager = new PhotoManager();
   
@@ -25,18 +25,23 @@ LinkedList<String> Tags = photo1.getTags();
 printTags(Tags);
 
 
-System.out.println("Get album2 name, condition, and photos:");
+System.out.println("\nGet album2 name, condition, and photos:");
 System.out.println("album2 name: " + album2.getName());
 System.out.println("album2 condition: " + album2.getCondition());
-  // error
 
 //You can get the list of photos in album2 by calling album2.getPhotos().
 LinkedList<Photo> Photos = album2.getPhotos();
 //You can write a method that prints the list of photos in album2.
 printPhotos(Photos);
   
-System.out.println("Delete the photo ’bear.jpg’:");
+System.out.println("\nDelete the photo ’bear.jpg’:\n");
 manager.deletePhoto("bear.jpg");
+
+System.out.println("Get album2 name, condition, and photos:");
+System.out.println("album2 name: " + album2.getName());
+System.out.println("album2 condition: " + album2.getCondition());
+printPhotos(album2.getPhotos());
+
 
 }
 
@@ -49,7 +54,7 @@ result.insert(tagsArray[i]);
 return result;
 }
   
-   public static void printTags(LinkedList<String> TagsList){
+public static void printTags(LinkedList<String> TagsList){
 	   TagsList.findfirst();
             if(TagsList.empty()) 
                 return;
@@ -64,7 +69,7 @@ return result;
            
 }
 
-   public static void printPhotos(LinkedList<Photo> photosList){
+public static void printPhotos(LinkedList<Photo> photosList){
 	   photosList.findfirst();
             if(photosList.empty()) 
                 return;
